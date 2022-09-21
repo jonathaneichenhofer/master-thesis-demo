@@ -11,7 +11,8 @@ As the original version, it has 3 services:
 Requirements
 -----------
 - AWS account to deploy the project
-- install the [kubectl tool](https://kubernetes.io/docs/tasks/tools/)
+- Install the [kubectl tool](https://kubernetes.io/docs/tasks/tools/)
+- Install [docker desktop](https://docs.docker.com/desktop/install/windows-install/)
 
 How to run
 ----------
