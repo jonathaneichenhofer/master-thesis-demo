@@ -22,4 +22,6 @@ The next step is to edit the docker-build-AWS file to address your ECR repositor
 Then, create the EKS cluster and the node-groups with the correct roles and deploy the app on it using `kubectl create -f microservices-AWS-EKS.yaml`.
 Finally it's necessary to modify the security group of the Ec2 instances that had been created to open the 80 port in the inbounce rules section.
 
+To end drop the deployment, run `kubectl delete -f microservices-AWS-EKS.yaml`.
+
 To find [further information](https://github.com/ewolff/microservice-kubernetes#readme)
