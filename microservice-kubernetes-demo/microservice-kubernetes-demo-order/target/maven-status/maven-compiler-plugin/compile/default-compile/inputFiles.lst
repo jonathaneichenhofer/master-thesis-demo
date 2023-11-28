@@ -1,0 +1,11 @@
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/main/java/com/ewolff/microservice/order/clients/CatalogClient.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/main/java/com/ewolff/microservice/order/logic/OrderService.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/main/java/com/ewolff/microservice/order/logic/Order.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/main/java/com/ewolff/microservice/order/clients/Item.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/main/java/com/ewolff/microservice/order/logic/OrderRepository.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/main/java/com/ewolff/microservice/order/logic/OrderLine.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/main/java/com/ewolff/microservice/order/clients/Customer.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/main/java/com/ewolff/microservice/order/clients/CustomerClient.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/main/java/com/ewolff/microservice/order/logic/OrderController.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/main/java/com/ewolff/microservice/order/logic/SpringRestDataConfig.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/main/java/com/ewolff/microservice/order/OrderApp.java

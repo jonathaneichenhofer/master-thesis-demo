@@ -1,0 +1,28 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: master-thesis-demo
+  region: eu-central-1
+
+vpc:
+  id: "vpc-12345"
+  securityGroup: "sg-018f6dadfecbec27d"    # this is the ControlPlaneSecurityGroup
+  subnets:
+    private:
+      private1:
+          id: "subnet-12345"
+      private2:
+          id: "subnet-67890"
+    public:
+      public1:
+          id: "subnet-12345"
+      public2:
+          id: "subnet-67890"
+
+nodeGroups:
+  - name: master-thesis-demo-nodes
+    instanceType: t2.micro
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 2

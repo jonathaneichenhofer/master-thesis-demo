@@ -1,0 +1,6 @@
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/test/java/com/ewolff/microservice/order/logic/CustomerConsumerDrivenContractTest.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/test/java/com/ewolff/microservice/order/catalogstub/CatalogStub.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/test/java/com/ewolff/microservice/order/OrderTestApp.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/test/java/com/ewolff/microservice/order/logic/OrderWebIntegrationTest.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/test/java/com/ewolff/microservice/order/customerstub/CustomerStub.java
+/Volumes/Case Sensitive/master-thesis/microservices-kubernetes-AWS-EKS/microservice-kubernetes-demo/microservice-kubernetes-demo-order/src/test/java/com/ewolff/microservice/order/logic/CatalogConsumerDrivenContractTest.java

@@ -1,0 +1,4 @@
+com/ewolff/microservice/customer/CustomerRepository.class
+com/ewolff/microservice/customer/CustomerApp.class
+com/ewolff/microservice/customer/Customer.class
+com/ewolff/microservice/customer/web/CustomerController.class

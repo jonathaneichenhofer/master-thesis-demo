@@ -1,0 +1,35 @@
+.\mvnw clean package
+
+sh docker-build-AWS.sh
+
+aws eks create-cluster --name master-thesis-demo --role-arn arn:aws:iam::162892665763:role/Master-EKS-Admin --resources-vpc-config subnetIds=subnet-0586206f,subnet-8a1bfbc6,subnet-e8889595,securityGroupIds=sg-018f6dadfecbec27d --kubernetes-version 1.28 --region eu-central-1
+aws eks update-kubeconfig --region eu-central-1 --name master-thesis-demo
+
+# not needed anymore
+aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy --role-name Master-demo-admin
+aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy --role-name Master-demo-admin
+aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly --role-name Master-demo-admin
+
+
+aws eks create-nodegroup --cluster-name master-thesis-demo \
+  --nodegroup-name master-thesis-demo-mid-nodes \
+  --subnets subnet-0586206f subnet-8a1bfbc6 subnet-e8889595 \
+  --node-role arn:aws:iam::162892665763:role/Master-demo-admin \
+  --scaling-config minSize=1,maxSize=4,desiredSize=1 \
+  --instance-types t4g.medium \
+  --ami-type AL2_ARM_64 \
+  --region eu-central-1
+
+aws eks describe-nodegroup --cluster-name master-thesis-demo --nodegroup-name master-thesis-demo-mid-nodes
+
+kubectl get nodes
+
+kubectl create -f microservices-AWS-EKS.yaml
+
+kubectl get pods
+
+kubectl delete -f microservices-AWS-EKS.yaml
+
+kubectl apply -f - <<EOF\napiVersion: opentelemetry.io/v1alpha1\nkind: OpenTelemetryCollector\nmetadata:\n  name: demo\nspec:\n  config: |\n    receivers:\n      otlp:\n        protocols:\n          grpc:\n          http:\n    processors:\n      memory_limiter:\n        check_interval: 1s\n        limit_percentage: 75\n        spike_limit_percentage: 15\n      batch:\n        send_batch_size: 10000\n        timeout: 10s\n\n    exporters:\n      # NOTE: Prior to v0.86.0 use `logging` instead of `debug`.\n      debug:\n\n    service:\n      pipelines:\n        traces:\n          receivers: [otlp]\n          processors: [memory_limiter, batch]\n          exporters: [debug]\n        metrics:\n          receivers: [otlp]\n          processors: [memory_limiter, batch]\n          exporters: [debug]\n        logs:\n          receivers: [otlp]\n          processors: [memory_limiter, batch]\n          exporters: [debug]\nEOF\n
+
+kubectl apply -f - <<EOF\napiVersion: opentelemetry.io/v1alpha1\nkind: Instrumentation\nmetadata:\n  name: demo-instrumentation\nspec:\n  exporter:\n    endpoint: http://demo-collector:4317\n  propagators:\n    - tracecontext\n    - baggage\n  sampler:\n    type: parentbased_traceidratio\n    argument: "1"\nEOF\n

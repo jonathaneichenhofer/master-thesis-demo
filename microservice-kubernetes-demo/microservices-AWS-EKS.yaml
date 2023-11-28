@@ -20,7 +20,7 @@ spec:
         app: microservices-kubernete
     spec:
       containers:
-      - image: 608842968837.dkr.ecr.eu-central-1.amazonaws.com/kubernetes-microservices:apache
+      - image: 162892665763.dkr.ecr.eu-central-1.amazonaws.com/jonathaneichenhofer:apache
         name: apache
         ports:
         - containerPort: 80
@@ -49,7 +49,7 @@ spec:
         run: catalog
     spec:
       containers:
-      - image: 608842968837.dkr.ecr.eu-central-1.amazonaws.com/kubernetes-microservices:catalog
+      - image: 162892665763.dkr.ecr.eu-central-1.amazonaws.com/jonathaneichenhofer:catalog
         name: catalog
         ports:
         - containerPort: 8080
@@ -78,7 +78,7 @@ spec:
         run: customer
     spec:
       containers:
-      - image: 608842968837.dkr.ecr.eu-central-1.amazonaws.com/kubernetes-microservices:customer
+      - image: 162892665763.dkr.ecr.eu-central-1.amazonaws.com/jonathaneichenhofer:customer
         name: customer
         ports:
         - containerPort: 8080
@@ -107,7 +107,7 @@ spec:
         run: order
     spec:
       containers:
-      - image: 608842968837.dkr.ecr.eu-central-1.amazonaws.com/kubernetes-microservices:order
+      - image: 162892665763.dkr.ecr.eu-central-1.amazonaws.com/jonathaneichenhofer:order
         name: order
         ports:
         - containerPort: 8080
