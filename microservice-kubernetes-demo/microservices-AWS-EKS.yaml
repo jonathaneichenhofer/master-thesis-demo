@@ -51,6 +51,17 @@ spec:
       containers:
       - image: 162892665763.dkr.ecr.eu-central-1.amazonaws.com/jonathaneichenhofer:catalog
         name: catalog
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: catalog
+        - name: OTEL_LOGS_EXPORTER
+          value: none
+        - name: OTEL_METRICS_EXPORTER
+          value: none
+        - name: OTEL_TRACES_EXPORTER
+          value: jaeger
+        - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+          value: http://simplest-collector:4317
         ports:
         - containerPort: 8080
         resources: {}
@@ -80,6 +91,17 @@ spec:
       containers:
       - image: 162892665763.dkr.ecr.eu-central-1.amazonaws.com/jonathaneichenhofer:customer
         name: customer
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: customer
+        - name: OTEL_LOGS_EXPORTER
+          value: none
+        - name: OTEL_METRICS_EXPORTER
+          value: none
+        - name: OTEL_TRACES_EXPORTER
+          value: jaeger
+        - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+          value: http://simplest-collector:4317
         ports:
         - containerPort: 8080
         resources: {}
@@ -109,6 +131,17 @@ spec:
       containers:
       - image: 162892665763.dkr.ecr.eu-central-1.amazonaws.com/jonathaneichenhofer:order
         name: order
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: order
+        - name: OTEL_LOGS_EXPORTER
+          value: none
+        - name: OTEL_METRICS_EXPORTER
+          value: none
+        - name: OTEL_TRACES_EXPORTER
+          value: jaeger
+        - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+          value: http://simplest-collector:4317
         ports:
         - containerPort: 8080
         resources: {}

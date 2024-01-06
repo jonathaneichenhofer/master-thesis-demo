@@ -1,11 +1,14 @@
-.\mvnw clean package
+./mvnw clean package
+
+#might need to login
+aws ecr get-login-password | docker login --username AWS --password-stdin 162892665763.dkr.ecr.eu-central-1.amazonaws.com
 
 sh docker-build-AWS.sh
 
 aws eks create-cluster --name master-thesis-demo --role-arn arn:aws:iam::162892665763:role/Master-EKS-Admin --resources-vpc-config subnetIds=subnet-0586206f,subnet-8a1bfbc6,subnet-e8889595,securityGroupIds=sg-018f6dadfecbec27d --kubernetes-version 1.28 --region eu-central-1
 aws eks update-kubeconfig --region eu-central-1 --name master-thesis-demo
 
-# not needed anymore
+# Setup first time
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy --role-name Master-demo-admin
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy --role-name Master-demo-admin
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly --role-name Master-demo-admin
@@ -28,8 +31,41 @@ kubectl create -f microservices-AWS-EKS.yaml
 
 kubectl get pods
 
+kubectl get services
+(take external ip from apache in browser)
+
+
+JAEGER: (https://faun.pub/how-to-deploy-jaeger-on-kubernetes-69cf48447182)
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.2/cert-manager.yaml
+
+kubectl create ns observability
+
+kubectl create -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.51.0/jaeger-operator.yaml -n observability
+
+kubectl get deployment jaeger-operator -n observability
+
+kubectl apply -f ../Otel/simplest.yml
+
+kubectl port-forward svc/simplest-query 16686:16686
+
+localhost:16686
+
+Deleting: 
+
 kubectl delete -f microservices-AWS-EKS.yaml
+
+aws eks delete-nodegroup --cluster-name master-thesis-demo --nodegroup-name master-thesis-demo-mid-nodes
+
+aws eks delete-cluster --name master-thesis-demo
+
+Random Stuff: 
+
+mvn clean build -X
+mvn package
+
 
 kubectl apply -f - <<EOF\napiVersion: opentelemetry.io/v1alpha1\nkind: OpenTelemetryCollector\nmetadata:\n  name: demo\nspec:\n  config: |\n    receivers:\n      otlp:\n        protocols:\n          grpc:\n          http:\n    processors:\n      memory_limiter:\n        check_interval: 1s\n        limit_percentage: 75\n        spike_limit_percentage: 15\n      batch:\n        send_batch_size: 10000\n        timeout: 10s\n\n    exporters:\n      # NOTE: Prior to v0.86.0 use `logging` instead of `debug`.\n      debug:\n\n    service:\n      pipelines:\n        traces:\n          receivers: [otlp]\n          processors: [memory_limiter, batch]\n          exporters: [debug]\n        metrics:\n          receivers: [otlp]\n          processors: [memory_limiter, batch]\n          exporters: [debug]\n        logs:\n          receivers: [otlp]\n          processors: [memory_limiter, batch]\n          exporters: [debug]\nEOF\n
 
 kubectl apply -f - <<EOF\napiVersion: opentelemetry.io/v1alpha1\nkind: Instrumentation\nmetadata:\n  name: demo-instrumentation\nspec:\n  exporter:\n    endpoint: http://demo-collector:4317\n  propagators:\n    - tracecontext\n    - baggage\n  sampler:\n    type: parentbased_traceidratio\n    argument: "1"\nEOF\n
+
+kubectl exec -it order-59b8dc96b4-kxvfm -- curl http://simplest-collector:14268/api/traces
